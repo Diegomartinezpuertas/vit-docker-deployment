@@ -1,0 +1,10 @@
+# Course material, not ours to publish
+docs/assignment.pdf
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Report sources: only the final PDF is published
+docs/report/

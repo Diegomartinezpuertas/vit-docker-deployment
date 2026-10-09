@@ -1,0 +1,3 @@
+# Pinned from `pip freeze` inside the working image.
+gradio==6.30.0
+requests==2.34.2

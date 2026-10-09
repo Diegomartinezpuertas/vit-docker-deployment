@@ -1,0 +1,9 @@
+# torch is NOT listed: it comes from the base image (2.7.1+cu128).
+# Versions pinned from `pip freeze` inside the working image.
+fastapi==0.115.14
+uvicorn[standard]==0.32.1
+transformers==4.46.3
+pillow==11.0.0
+python-multipart==0.0.32
+# Only used by train.py (fine-tuning on the beans dataset)
+datasets==4.1.1

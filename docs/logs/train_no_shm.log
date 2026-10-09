@@ -1,0 +1,5 @@
+$ docker run --rm --gpus '"device=0"' vit-inference:1.0 python train.py --epochs 1 --workers 4 --batch-size 64   # no --shm-size (64 MB default)
+Device: cuda (NVIDIA GeForce RTX 5070 Laptop GPU)
+RuntimeError: DataLoader worker (pid 67) is killed by signal: Bus error. It is possible that dataloader's workers are out of shared memory. Please try to raise your shared memory limit.
+    raise RuntimeError(
+RuntimeError: DataLoader worker (pid(s) 67) exited unexpectedly

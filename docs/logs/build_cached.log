@@ -1,0 +1,45 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.18kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/pytorch/pytorch:2.7.1-cuda12.8-cudnn9-runtime
+#2 DONE 0.2s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 465B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 152B done
+#4 DONE 0.0s
+
+#5 [1/6] FROM docker.io/pytorch/pytorch:2.7.1-cuda12.8-cudnn9-runtime@sha256:c16f4c749e2d9e96878875cdf6cc45cddda1d1a36fddd371dd6f2360f1b6e2a2
+#5 resolve docker.io/pytorch/pytorch:2.7.1-cuda12.8-cudnn9-runtime@sha256:c16f4c749e2d9e96878875cdf6cc45cddda1d1a36fddd371dd6f2360f1b6e2a2 0.0s done
+#5 DONE 0.0s
+
+#6 [4/6] COPY requirements.txt .
+#6 CACHED
+
+#7 [3/6] WORKDIR /app
+#7 CACHED
+
+#8 [5/6] RUN pip install --no-cache-dir -r requirements.txt
+#8 CACHED
+
+#9 [2/6] RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/*
+#9 CACHED
+
+#10 [6/6] COPY . .
+#10 CACHED
+
+#11 exporting to image
+#11 exporting layers done
+#11 exporting manifest sha256:c4cf9b23607af9d358dabdee3a5566bfd34456bc1e79cd2552afb43da03434c6 done
+#11 exporting config sha256:46df05b46eeef20fadebc0346dd381b5d5bdedde58c3db0b7fde8a15ec5f20d2 done
+#11 exporting attestation manifest sha256:2b90799c27d5cd8c1d702823f36b6000b91d2d124a8efd5eb2fc8bc795b7e977 0.0s done
+#11 exporting manifest list sha256:c50abb239f5abc04ac971fbf659d9af9ff7bdb3d105ee18c815b8c636785fa8c 0.0s done
+#11 naming to docker.io/library/vit-inference:1.0 done
+#11 unpacking to docker.io/library/vit-inference:1.0 done
+#11 DONE 0.1s

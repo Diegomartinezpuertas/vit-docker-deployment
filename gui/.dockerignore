@@ -1,0 +1,11 @@
+# Files excluded from the build context: never sent to the Docker daemon,
+# so COPY . . stays small and editing them never invalidates the cache.
+__pycache__/
+*.pyc
+.venv/
+# Gradio's local cache of uploaded/flagged files
+.gradio/
+
+# Build files are not needed inside the image
+Dockerfile
+.dockerignore

@@ -1,0 +1,54 @@
+name: vit-app
+
+# Reusable blocks (YAML anchors): GPU + limits, and log rotation.
+x-gpu: &gpu
+  deploy:
+    resources:
+      limits: {memory: "${INFERENCE_MEMORY:-6g}", cpus: "${INFERENCE_CPUS:-4}"}
+      reservations:
+        devices: [{driver: nvidia, device_ids: ["${GPU_ID:-0}"], capabilities: [gpu]}]
+x-logging: &logging
+  logging: {driver: json-file, options: {max-size: "10m", max-file: "3"}}
+
+services:
+  inference:            # FastAPI + PyTorch on the GPU, not published to the host
+    build: ./inference
+    image: vit-inference:1.0
+    <<: [*gpu, *logging]
+    environment: {MODEL_ID: "${MODEL_ID:-google/vit-base-patch16-224}"}
+    volumes: [models:/models]
+    shm_size: "2gb"
+    expose: ["8000"]
+    restart: unless-stopped
+    networks: [backend]
+
+  gui:                  # Gradio, the only service with a published port
+    build: ./gui
+    image: vit-gui:1.0
+    <<: *logging
+    ports: ["${GUI_PORT:-7860}:7860"]
+    environment:
+      API_URL: http://inference:8000
+      MODEL_ID: "${MODEL_ID:-google/vit-base-patch16-224}"  # unused; recreates the GUI when the model changes
+    depends_on: {inference: {condition: service_healthy}}
+    deploy: {resources: {limits: {memory: 1g, cpus: "1"}}}
+    restart: unless-stopped
+    networks: [frontend, backend]
+
+  train:                # one-off fine-tuning job: docker compose --profile train run --rm train
+    build: ./inference
+    image: vit-inference:1.0
+    profiles: [train]
+    <<: [*gpu, *logging]
+    command: python train.py --epochs ${EPOCHS:-3} --output /models/vit-beans
+    volumes: [models:/models]
+    shm_size: "2gb"
+    ulimits: {memlock: -1, stack: 67108864}   # recommended by NVIDIA for PyTorch
+    networks: [backend]
+
+volumes:
+  models:
+
+networks:
+  frontend:
+  backend:

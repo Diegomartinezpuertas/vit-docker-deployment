@@ -1,0 +1,20 @@
+# Files excluded from the build context: they are never sent to the Docker
+# daemon, so COPY . . stays small and editing them never invalidates the cache.
+
+# Python bytecode caches (regenerated at runtime)
+__pycache__/
+*.pyc
+
+# Local virtual environment: the image installs its own dependencies
+.venv/
+
+# Training outputs live in the hf-cache volume, not in the image
+checkpoints/
+
+# Test images used with curl
+*.jpg
+*.png
+
+# Build files are not needed inside the image
+Dockerfile
+.dockerignore
